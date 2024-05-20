@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Estructura</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .menu { margin-bottom: 20px; }
+        .menu input, .menu button { margin-right: 10px; }
+        .highlight { fill: orange; }
+        .insert-head { fill: green; }
+        .insert-tail { fill: green; }
+        .insert-before { fill: orange; }
+        .insert-between { fill: green; }
+        .insert-after { fill: blue; }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light pt-3 d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                    <div class="d-inline-flex align-items-center">
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+        <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5">
+                <a href="" class="navbar-brand">
+                    <h1 class="m-0 text-primary"><span class="text-dark">ALGO</span>RITMO</h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto py-0">
+                        <a href="index.html" class="nav-item nav-link">Inicio</a>
+                        <a href="algoritmo.html" class="nav-item nav-link">Algoritmo</a>
+                        
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Para los curiosos</a>
+                            <div class="dropdown-menu border-0 rounded-0 m-0">
+                                <a href="single.html" class="dropdown-item">Como funciona la lista doblemente enlazada</a>
+                                <a href="circular.html" class="dropdown-item">Qué es una lista circular doblemente enlazada</a>
+                                
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Header Start -->
+    <div class="container-fluid page-header">
+        <div class="container">
+            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 400px">
+                <h3 class="display-4 text-white text-uppercase">Algoritmo </h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white">Lista doblemente enlazada</a></p>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    
+
+
+    <!-- Blog Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Blog Detail Start -->
+
+                    <div class="menu">
+                        <button onclick="createEmptyList()">Crear Lista Vacía</button>
+                        <p>
+                        <input type="number" id="numNodes" placeholder="Número de Nodos" min="1">
+                        <button onclick="createDefinedList()">Crear Lista Definida</button>
+                        <p>
+                        <input type="number" id="searchValue" placeholder="Valor a Buscar" min="1">
+                        <button onclick="searchNode()">Buscar Nodo</button>
+                        <p>
+                        <input type="number" id="insertValue" placeholder="Valor a Insertar" min="1">
+                        <button onclick="insertAtHead()">Insertar en Cabeza</button>
+                        <button onclick="insertAtTail()">Insertar en Cola</button>
+                        <p>
+                        <input type="number" id="beforeNode" placeholder="Antes del Nodo" min="1">
+                        <input type="number" id="afterNode" placeholder="Después del Nodo" min="1">
+                        <button onclick="insertBetween()">Especificar Inserción</button>
+                        <p>
+                        <button onclick="deleteHead()">Eliminar Cabeza</button>
+                        <button onclick="deleteTail()">Eliminar Cola</button>
+                        <p>
+                        <input type="number" id="deleteIndex" placeholder="Posición a Eliminar" min="1">
+                        <button onclick="deleteNode()">Especificar Nodo a Eliminar</button>
+                    </div>
+                    <div class="col-lg-8" id="doublyLinkedListDiagram"></div>
+                
+                    <script>
+                        var width = 800;
+                        var height = 300;
+                        var nodeRadius = 20;
+                        var data = [];
+                        var svg = d3.select("#doublyLinkedListDiagram")
+                                    .append("svg")
+                                    .attr("width", width)
+                                    .attr("height", height);
+
+                        // Función para generar un número aleatorio entre min (incluido) y max (excluido)
+                        function getRandomNumber(min, max) {
+                            return Math.floor(Math.random() * (max - min)) + min;
+                        }
+
+                        // Crear una lista vacía
+                        function createEmptyList() {
+                            data = [];
+                            updateDiagram();
+                        }
+
+                        // Crear una lista definida con un número de nodos aleatorios
+                        function createDefinedList() {
+                            var numNodes = parseInt(document.getElementById("numNodes").value);
+                            if (!isNaN(numNodes) && numNodes > 0) {
+                                data = [];
+                                for (var i = 0; i < numNodes; i++) {
+                                    data.push({ value: getRandomNumber(1, 100) });
+                                }
+                                // Agregar nodos ficticios al principio y al final para representar "null"
+                                data.unshift({ value: null }); // Primer nodo con enlace previo nulo
+                                data.push({ value: null }); // Último nodo con enlace siguiente nulo
+                                updateDiagram();
+                            } else {
+                                alert("Por favor, ingrese un número válido de nodos.");
+                            }
+                        }
+
+                        // Actualizar el diagrama con los datos actuales
+                        function updateDiagram() {
+                            svg.selectAll("*").remove();
+                            var nodes = svg.selectAll("g")
+                                            .data(data)
+                                            .enter()
+                                            .append("g")
+                                            .attr("transform", function(d, i) { return "translate(" + ((i + 1) * (width / (data.length + 1))) + "," + (height / 2) + ")"; });
+
+                            nodes.append("circle")
+                                .attr("r", nodeRadius)
+                                .style("fill", "steelblue")
+                                .classed("highlight", false);
+
+                            nodes.append("text")
+                                .attr("text-anchor", "middle")
+                                .attr("dy", ".3em")
+                                .text(function(d) { return d.value === null ? "null" : d.value; })
+                                .style("fill", function(d) { return d.value === null ? "red" : "white"; });
+
+                            for (var i = 1; i < data.length - 1; i++) {
+                                if (data[i - 1].value !== null) {
+                                    svg.append("line")
+                                        .attr("x1", (i * (width / (data.length + 1))) + nodeRadius)
+                                        .attr("y1", height / 2)
+                                        .attr("x2", ((i + 1) * (width / (data.length + 1))) - nodeRadius)
+                                        .attr("y2", height / 2)
+                                        .attr("marker-end", "url(#arrowhead)")
+                                        .style("stroke", "black")
+                                        .style("stroke-width", 2);
+
+                                    // Enlace anterior
+                                    svg.append("line")
+                                        .attr("x1", ((i + 1) * (width / (data.length + 1))) - nodeRadius)
+                                        .attr("y1", height / 2)
+                                        .attr("x2", (i * (width / (data.length + 1))) + nodeRadius)
+                                        .attr("y2", height / 2)
+                                        .attr("marker-end", "url(#arrowhead)")
+                                        .style("stroke", "black")
+                                        .style("stroke-width", 2);
+                                }
+                            }
+
+                            // Definir el marcador de la flecha
+                            svg.append("defs").append("marker")
+                                .attr("id", "arrowhead")
+                                .attr("viewBox", "-0 -5 10 10")
+                                .attr("refX", 5)
+                                .attr("refY", 0)
+                                .attr("orient", "auto")
+                                .attr("markerWidth", 4)
+                                .attr("markerHeight", 4)
+                                .attr("xoverflow", "visible")
+                                .append("svg:path")
+                                .attr("d", "M 0,-5 L 10 ,0 L 0,5")
+                                .attr("fill", "#000")
+                                .style("stroke", "none");
+                        }
+
+                        // Buscar nodo en la lista
+                        function searchNode() {
+                            var searchValue = parseInt(document.getElementById("searchValue").value);
+                            if (!isNaN(searchValue)) {
+                                var found = false;
+                                for (var i = 0; i < data.length; i++) {
+                                    if (data[i].value === searchValue) {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                                if (found) {
+                                    updateDiagram();
+                                    d3.select(svg.selectAll("g").nodes()[i]).select("circle").style("fill", "red");
+                                } else {
+                                    alert("Valor no encontrado en la lista.");
+                                }
+                            } else {
+                                alert("Por favor, ingrese un valor válido para buscar.");
+                            }
+                        }
+
+                        // Insertar nodo en la cabeza
+                        function insertAtHead() {
+                            var insertValue = parseInt(document.getElementById("insertValue").value);
+                            if (!isNaN(insertValue)) {
+                                data.splice(1, 0, { value: insertValue });
+                                updateDiagram();
+                            } else {
+                                alert("Por favor, ingrese un valor válido para insertar.");
+                            }
+                        }
+
+                        // Insertar nodo en la cola
+                        function insertAtTail() {
+                            var insertValue = parseInt(document.getElementById("insertValue").value);
+                            if (!isNaN(insertValue)) {
+                                data.splice(data.length - 1, 0, { value: insertValue });
+                                updateDiagram();
+                            } else {
+                                alert("Por favor, ingrese un valor válido para insertar.");
+                            }
+                        }
+
+                        // Insertar nodo en una posición específica
+                        function insertBetween() {
+                            var insertValue = parseInt(document.getElementById("insertValue").value);
+                            var beforeNode = parseInt(document.getElementById("beforeNode").value);
+                            var afterNode = parseInt(document.getElementById("afterNode").value);
+
+                            if (!isNaN(insertValue) && !isNaN(beforeNode) && !isNaN(afterNode)) {
+                                if (beforeNode >= 1 && beforeNode < data.length - 1 && afterNode >= 1 && afterNode < data.length - 1) {
+                                    if (Math.abs(beforeNode - afterNode) === 1) {
+                                        var position = Math.min(beforeNode, afterNode) + 1;
+                                        data.splice(position, 0, { value: insertValue });
+                                        updateDiagram();
+                                    } else {
+                                        alert("Los valores antes y después deben ser adyacentes.");
+                                    }
+                                } else {
+                                    alert("Posiciones fuera de rango.");
+                                }
+                            } else {
+                                alert("Por favor, ingrese valores válidos para la inserción.");
+                            }
+                        }
+
+                        // Eliminar nodo en la cabeza
+                        function deleteHead() {
+                            if (data.length > 2) { // Asegurarse de no eliminar el nodo ficticio "null"
+                                data.splice(1, 1);
+                                updateDiagram();
+                            } else {
+                                alert("No hay nodos para eliminar en la cabeza.");
+                            }
+                        }
+
+                        // Eliminar nodo en la cola
+                        function deleteTail() {
+                            if (data.length > 2) { // Asegurarse de no eliminar el nodo ficticio "null"
+                                data.splice(data.length - 2, 1);
+                                updateDiagram();
+                            } else {
+                                alert("No hay nodos para eliminar en la cola.");
+                            }
+                        }
+
+                        // Eliminar un nodo específico
+                        function deleteNode() {
+                            var deleteIndex = parseInt(document.getElementById("deleteIndex").value);
+                            if (!isNaN(deleteIndex) && deleteIndex >= 1 && deleteIndex < data.length - 1) {
+                                data.splice(deleteIndex, 1);
+                                updateDiagram();
+                            } else {
+                                alert("Por favor, ingrese una posición válida para eliminar.");
+                            }
+                        }
+                    </script>
+
+                    <!-- Blog Detail End -->
+                    
+                    </div>
+                    
+    
+                   
+    
+                    
+                </div>
+    
+                
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+
+
+  
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
